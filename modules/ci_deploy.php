@@ -77,8 +77,8 @@ final class CI_Deploy extends PhpDeploy
 
         $cmd = '';
         
-        $cmd .= $this->_copy_ci_configs() . '\n';
-        $cmd .= $this->_run_migration_and_update_index() . '\n';
+        $cmd .= $this->_copy_ci_configs();
+        $cmd .= $this->_run_migration_and_update_index();
 
         echo shell_exec( $cmd );
 
@@ -133,7 +133,7 @@ final class CI_Deploy extends PhpDeploy
      */
     private function _run_migration_and_update_index( )
     {
-        return 'echo NaN';
+        return 'echo NaN;';
     }
 
 }

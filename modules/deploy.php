@@ -113,10 +113,10 @@ class PhpDeploy extends BaseDeploy
 
         $cmd = '';
         
-        $cmd .= $this->_lock( true ) . '\n';
-        $cmd .= $this->_download_latest_project( ) . '\n';
-        $cmd .= $this->_create_build_by_current_index( ) . '\n';
-        $cmd .= $this->_deploy_current_build( ) . '\n';
+        $cmd .= $this->_lock( true );
+        $cmd .= $this->_download_latest_project( );
+        $cmd .= $this->_create_build_by_current_index( );
+        $cmd .= $this->_deploy_current_build( );
 
         echo shell_exec( $cmd );
         
@@ -148,7 +148,7 @@ class PhpDeploy extends BaseDeploy
     {
         $this->_rewrite_file( PhpDeploy::REPEAT_UPDATE_FILE, '1' );
 
-        return 'print "Server is deploying.\nAfter this, will happen repeat deploy.\n"';
+        return 'print "Server is deploying.\nAfter this, will happen repeat deploy.\n";';
     }
 
 
@@ -232,7 +232,7 @@ class PhpDeploy extends BaseDeploy
 
         }
 
-        return 'echo "Current deploy is locked."';
+        return 'echo "Current deploy is locked.";';
 
     }
 
@@ -313,7 +313,7 @@ class PhpDeploy extends BaseDeploy
     private function _deploy_current_build( )
     {
 
-        $cmd = 'cp -Ru ' . $this->_build_folder . '/. ' . PhpDeploy::DOC_ROOT_PATH;
+        $cmd = 'cp -Ru ' . $this->_build_folder . '/. ' . PhpDeploy::DOC_ROOT_PATH . ';';
 
         return $cmd;
 

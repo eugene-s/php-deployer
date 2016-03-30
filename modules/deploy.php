@@ -98,6 +98,9 @@ class PhpDeploy extends BaseDeploy
         $this->_build_index = (int) $this->_read_file( PhpDeploy::BUILD_INDEX_FILE );
         $this->_build_folder = PhpDeploy::BUILDS_PATH . '/' . $this->_build_index;
 
+        // Save next build index
+        $this->_rewrite_file( PhpDeploy::BUILD_INDEX_FILE, $this->_build_index + 1 );
+
     }
 
 
@@ -110,7 +113,7 @@ class PhpDeploy extends BaseDeploy
     {
         $rs = '';
         
-        $commands = ['$PWD'];
+        $commands = ['echo $PWD'];
 
         $commands = array_merge( $commands, $this->_lock( true ) );
         $commands = array_merge( $commands, $this->_download_latest_project( ) );
@@ -301,9 +304,6 @@ class PhpDeploy extends BaseDeploy
         foreach ( CLEAN_FILES as $file_name ) {
             $cmd[] = "find {$this->_build_folder} -type f -name $file_name -delete";
         }
-
-        // Save next build index
-        $this->_rewrite_file( PhpDeploy::BUILD_INDEX_FILE, $this->_build_index + 1 );
 
         return $cmd;
 

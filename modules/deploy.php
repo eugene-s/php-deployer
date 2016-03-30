@@ -121,6 +121,10 @@ class PhpDeploy extends BaseDeploy
             $this->_rewrite_file( PhpDeploy::REPEAT_UPDATE_FILE, '0' );
             $this->do_deploy( );
             
+        } else {
+
+            $this->_lock( false );
+
         }
 
         return ob_get_clean();

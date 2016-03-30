@@ -256,8 +256,6 @@ class PhpDeploy extends BaseDeploy
     private function _download_latest_project( )
     {
 
-        $cmd[] = 'cd ' . PhpDeploy::TMP_PATH;
-
         if ( ! is_dir(PhpDeploy::TMP_PATH . '/.git') ) {
 
             $cmd[] = 'git clone -b ' . BRANCH_NAME . ' ' . REPO_LINK . ' ' . PhpDeploy::TMP_PATH;

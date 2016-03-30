@@ -1,5 +1,7 @@
 <?php
 
+define('BASEPATH', '2click.remotehost.tk');
+
 /**
  * Php-Deployer
  * 

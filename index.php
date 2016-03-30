@@ -40,7 +40,7 @@ require_once 'config.php';
 # Include modules
 require_once 'modules/base.php';
 require_once 'modules/deploy.php';
-require_once 'modules/ci_deploy.php';
+require_once 'modules/CI_Deploy1.php';
 require_once 'modules/github_hook.php';
 
 

@@ -320,6 +320,9 @@ class PhpDeploy extends BaseDeploy
 
         $cmd[] = 'cp -Ru ' . $this->_build_folder . '/. ' . PhpDeploy::DOC_ROOT_PATH;
 
+        $cmd[] = 'find ' . PhpDeploy::DOC_ROOT_PATH . ' -type f | xargs chmod -v 644';
+        $cmd[] = 'find ' . PhpDeploy::DOC_ROOT_PATH . ' -type d | xargs chmod -v 755';
+
         return $cmd;
 
     }

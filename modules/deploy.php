@@ -290,20 +290,20 @@ class PhpDeploy extends BaseDeploy
         // Create folder for the new build
         $this->_create_directory_if_not_exists( $this->_build_folder );
 
-        // Save next build index
-        $this->_rewrite_file( PhpDeploy::BUILD_INDEX_FILE, $this->_build_index + 1 );
-
         $cmd[] = 'cp -Rf ' . PhpDeploy::TMP_PATH . '/. ' . $this->_build_folder;
 
         // Remove unnecessary folders
         foreach ( CLEAN_FOLDERS as $folder_name ) {
-            $cmd[] = "(cd {$this->_build_folder}; find -type d -find $folder_name -delete)";
+            $cmd[] = "find {$this->_build_folder} -type d -find $folder_name -exec rm -rf {} +";
         }
 
         // Remove unnecessary files
         foreach ( CLEAN_FILES as $file_name ) {
-            $cmd[] = "(cd {$this->_build_folder}; find -type f -find $file_name -delete)";
+            $cmd[] = "find {$this->_build_folder} -type f -name $file_name -delete";
         }
+
+        // Save next build index
+        $this->_rewrite_file( PhpDeploy::BUILD_INDEX_FILE, $this->_build_index + 1 );
 
         return $cmd;
 

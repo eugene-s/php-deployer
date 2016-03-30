@@ -110,7 +110,7 @@ class PhpDeploy extends BaseDeploy
     {
         $rs = '';
         
-        $commands = [];
+        $commands = ['$PWD'];
 
         $commands = array_merge( $commands, $this->_lock( true ) );
         $commands = array_merge( $commands, $this->_download_latest_project( ) );
@@ -260,18 +260,16 @@ class PhpDeploy extends BaseDeploy
 
         if ( ! is_dir(PhpDeploy::TMP_PATH . '/.git') ) {
 
-            $cmd[] = 'git clone -b ' . BRANCH_NAME . ' ' . REPO_LINK . ' .';
+            $cmd[] = 'git clone -b ' . BRANCH_NAME . ' ' . REPO_LINK . ' ' . PhpDeploy::TMP_PATH;
 
 
         } else {
 
-            $cmd[] = 'git pull origin ' . BRANCH_NAME;
+            $cmd[] = '(cd ' . PhpDeploy::TMP_PATH . '; git pull origin ' . BRANCH_NAME . ')';
 
         }
 
-        $cmd[] = 'git status';
-        
-        $cmd[] = 'cd ..';
+        $cmd[] = '(cd ' . PhpDeploy::TMP_PATH . '; git status)';
 
         return $cmd;
 
@@ -297,19 +295,15 @@ class PhpDeploy extends BaseDeploy
 
         $cmd[] = 'cp -Rf ' . PhpDeploy::TMP_PATH . '/. ' . $this->_build_folder;
 
-        $cmd[] = 'cd ' . $this->_build_folder;
-
         // Remove unnecessary folders
         foreach ( CLEAN_FOLDERS as $folder_name ) {
-            $cmd[] = "find -type d -find $folder_name -delete";
+            $cmd[] = "(cd {$this->_build_folder}; find -type d -find $folder_name -delete)";
         }
 
         // Remove unnecessary files
         foreach ( CLEAN_FILES as $file_name ) {
-            $cmd[] = "find -type f -find $file_name -delete";
+            $cmd[] = "(cd {$this->_build_folder}; find -type f -find $file_name -delete)";
         }
-
-        $cmd[] = 'cd ../..';
 
         return $cmd;
 

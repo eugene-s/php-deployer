@@ -23,7 +23,7 @@ class PhpDeploy extends BaseDeploy
      *
      * @const
      */
-    const BUILDS_PATH = 'var/builds';
+    const BUILDS_PATH = 'builds';
 
 
     /**

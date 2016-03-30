@@ -17,7 +17,7 @@ class BaseDeploy
         if ( ! is_dir( $_directory_ ) ) {
 
             $old_mask = umask( );
-            mkdir( PhpDeploy::VAR_PATH, 0755 );
+            mkdir( $_directory_, 0755, true );
             umask( $old_mask );
 
         }

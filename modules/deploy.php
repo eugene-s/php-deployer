@@ -112,10 +112,11 @@ class PhpDeploy extends BaseDeploy
     public function do_deploy( )
     {
         $rs = '';
-        
+
+        $this->_lock( true );
+
         $commands = ['echo $PWD'];
 
-        $commands = array_merge( $commands, $this->_lock( true ) );
         $commands = array_merge( $commands, $this->_download_latest_project( ) );
         $commands = array_merge( $commands, $this->_create_build_by_current_index( ) );
         $commands = array_merge( $commands, $this->_deploy_current_build( ) );
@@ -240,10 +241,6 @@ class PhpDeploy extends BaseDeploy
             $this->_rewrite_file( PhpDeploy::LOCK_FILE, '0' );
 
         }
-
-        $cmd[] = 'echo "Current deploy is locked."';
-
-        return $cmd;
 
     }
 

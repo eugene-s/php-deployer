@@ -50,6 +50,7 @@ function ExecuteDeploy( )
 
     $deploy = new CI_Deploy( );
 
+    echo '<pre>';
     if ( ! $deploy->is_locked( ) ) {
     
         echo $deploy->do_deploy( );
@@ -59,6 +60,7 @@ function ExecuteDeploy( )
         echo $deploy->do_repeat_deploy( );
         
     }
+    echo '</pre>';
 
 }
 

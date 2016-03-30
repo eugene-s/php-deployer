@@ -71,16 +71,18 @@ final class CI_Deploy extends PhpDeploy
     public function do_deploy()
     {
 
-        $rs = parent::do_deploy();
-
         ob_start();
 
-        print $this->_copy_ci_configs() . '\n';
-        print $this->_run_migration_and_update_index() . '\n';
+        echo parent::do_deploy();
 
-        $rs .= ob_get_clean();
+        $cmd = '';
+        
+        $cmd .= $this->_copy_ci_configs() . '\n';
+        $cmd .= $this->_run_migration_and_update_index() . '\n';
 
-        return $rs;
+        echo shell_exec( $cmd );
+
+        return ob_get_clean();
 
     }
 
@@ -116,7 +118,7 @@ final class CI_Deploy extends PhpDeploy
         
         $cmd .= 'find ' . CI_Deploy::CI_PRODUCTION_CONFIGS_PATH . ' -type f | xargs chmod -v 600;';
         
-        return shell_exec( $cmd );
+        return $cmd;
         
     }
 
@@ -131,7 +133,7 @@ final class CI_Deploy extends PhpDeploy
      */
     private function _run_migration_and_update_index( )
     {
-        return 'NaN';
+        return 'echo NaN';
     }
 
 }

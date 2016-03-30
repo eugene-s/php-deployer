@@ -111,11 +111,15 @@ class PhpDeploy extends BaseDeploy
 
         ob_start();
 
-        print $this->_lock( true ) . '\n';
-        print $this->_download_latest_project( ) . '\n';
-        print $this->_create_build_by_current_index( ) . '\n';
-        print $this->_deploy_current_build( ) . '\n';
+        $cmd = '';
+        
+        $cmd .= $this->_lock( true ) . '\n';
+        $cmd .= $this->_download_latest_project( ) . '\n';
+        $cmd .= $this->_create_build_by_current_index( ) . '\n';
+        $cmd .= $this->_deploy_current_build( ) . '\n';
 
+        echo shell_exec( $cmd );
+        
         if ( $this->_read_file( PhpDeploy::REPEAT_UPDATE_FILE ) === '1' ) {
 
             $this->_rewrite_file( PhpDeploy::REPEAT_UPDATE_FILE, '0' );
@@ -144,7 +148,7 @@ class PhpDeploy extends BaseDeploy
     {
         $this->_rewrite_file( PhpDeploy::REPEAT_UPDATE_FILE, '1' );
 
-        return 'Server is deploying.\r\nAfter this, will happen repeat deploy.';
+        return 'print "Server is deploying.\nAfter this, will happen repeat deploy.\n"';
     }
 
 
@@ -228,7 +232,7 @@ class PhpDeploy extends BaseDeploy
 
         }
 
-        return 'Current deploy is locked.';
+        return 'echo "Current deploy is locked."';
 
     }
 
@@ -259,7 +263,7 @@ class PhpDeploy extends BaseDeploy
 
         $cmd .= 'git status;';
 
-        return shell_exec( $cmd );
+        return $cmd;
 
     }
 
@@ -293,7 +297,7 @@ class PhpDeploy extends BaseDeploy
             $cmd .= "find -type f -find $file_name -delete;";
         }
 
-        return shell_exec( $cmd );
+        return $cmd;
 
     }
 
@@ -311,7 +315,7 @@ class PhpDeploy extends BaseDeploy
 
         $cmd = 'cp -Ru ' . $this->_build_folder . '/. ' . PhpDeploy::DOC_ROOT_PATH;
 
-        return shell_exec( $cmd );
+        return $cmd;
 
     }
 

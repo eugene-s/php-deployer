@@ -111,10 +111,10 @@ class PhpDeploy extends BaseDeploy
 
         ob_start();
 
-        echo $this->_lock( true );
-        echo $this->_download_latest_project( );
-        echo $this->_create_build_by_current_index( );
-        echo $this->_deploy_current_build( );
+        print $this->_lock( true ) . '\n';
+        print $this->_download_latest_project( ) . '\n';
+        print $this->_create_build_by_current_index( ) . '\n';
+        print $this->_deploy_current_build( ) . '\n';
 
         if ( $this->_read_file( PhpDeploy::REPEAT_UPDATE_FILE ) === '1' ) {
 

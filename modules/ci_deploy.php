@@ -75,8 +75,8 @@ final class CI_Deploy extends PhpDeploy
 
         ob_start();
 
-        echo $this->_copy_ci_configs();
-        echo $this->_run_migration_and_update_index();
+        print $this->_copy_ci_configs();
+        print $this->_run_migration_and_update_index();
 
         $rs .= ob_get_clean();
 

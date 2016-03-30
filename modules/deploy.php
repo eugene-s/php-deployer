@@ -281,7 +281,7 @@ class PhpDeploy extends BaseDeploy
         // Save next build index
         $this->_rewrite_file( PhpDeploy::BUILD_INDEX_FILE, $this->_build_index + 1 );
 
-        $cmd = 'cp -Rf ' . PhpDeploy::TMP_PATH . ' ' . $this->_build_folder . ';';
+        $cmd = 'cp -Rf ' . PhpDeploy::TMP_PATH . '/. ' . $this->_build_folder . ';';
 
         // Remove unnecessary folders
         foreach ( CLEAN_FOLDERS as $folder_name ) {

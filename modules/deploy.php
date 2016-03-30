@@ -144,7 +144,7 @@ class PhpDeploy extends BaseDeploy
     {
         $this->_rewrite_file( PhpDeploy::REPEAT_UPDATE_FILE, '1' );
 
-        return 'Server is deploying.\nAfter this, will happen repeat deploy.';
+        return 'Server is deploying.\r\nAfter this, will happen repeat deploy.';
     }
 
 

@@ -70,19 +70,21 @@ final class CI_Deploy extends PhpDeploy
      */
     public function do_deploy()
     {
+        $rs = parent::do_deploy();
 
-        ob_start();
+        $commands = [];
 
-        echo parent::do_deploy();
+        $commands = array_merge( $commands, $this->_copy_ci_configs() );
+        $commands = array_merge( $commands, $this->_run_migration_and_update_index() );
 
-        $cmd = '';
-        
-        $cmd .= $this->_copy_ci_configs();
-        $cmd .= $this->_run_migration_and_update_index();
+        foreach ( $commands as $cmd ) {
+            $tmp = shell_exec( $cmd );
 
-        echo shell_exec( $cmd );
+            $rs .= "$ $cmd\n";
+            $rs .= htmlentities(trim($tmp)) . "\n";
+        }
 
-        return ob_get_clean();
+        return $rs;
 
     }
 
@@ -114,9 +116,9 @@ final class CI_Deploy extends PhpDeploy
     private function _copy_ci_configs( )
     {
         
-        $cmd = 'cp -Rf ' . CI_Deploy::PRODUCTION_CONFIGS_PATH . '/. ' . CI_Deploy::CI_PRODUCTION_CONFIGS_PATH . ';';
+        $cmd[] = 'cp -Rf ' . CI_Deploy::PRODUCTION_CONFIGS_PATH . '/. ' . CI_Deploy::CI_PRODUCTION_CONFIGS_PATH;
         
-        $cmd .= 'find ' . CI_Deploy::CI_PRODUCTION_CONFIGS_PATH . ' -type f | xargs chmod -v 600;';
+        $cmd[] = 'find ' . CI_Deploy::CI_PRODUCTION_CONFIGS_PATH . ' -type f | xargs chmod -v 600';
         
         return $cmd;
         
@@ -133,7 +135,9 @@ final class CI_Deploy extends PhpDeploy
      */
     private function _run_migration_and_update_index( )
     {
-        return 'echo NaN;';
+        $cmd[] = 'echo NaN';
+
+        return $cmd;
     }
 
 }

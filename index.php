@@ -52,11 +52,11 @@ function ExecuteDeploy( )
 
     if ( ! $deploy->is_locked( ) ) {
     
-        print $deploy->do_deploy( );
+        echo $deploy->do_deploy( );
     
     } else {
         
-        print $deploy->do_repeat_deploy( );
+        echo $deploy->do_repeat_deploy( );
         
     }
 

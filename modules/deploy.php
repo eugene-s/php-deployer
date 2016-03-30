@@ -108,17 +108,21 @@ class PhpDeploy extends BaseDeploy
      */
     public function do_deploy( )
     {
-
-        ob_start();
-
-        $cmd = '';
+        $rs = '';
         
-        $cmd .= $this->_lock( true );
-        $cmd .= $this->_download_latest_project( );
-        $cmd .= $this->_create_build_by_current_index( );
-        $cmd .= $this->_deploy_current_build( );
+        $commands = [];
 
-        echo shell_exec( $cmd );
+        $commands = array_merge( $commands, $this->_lock( true ) );
+        $commands = array_merge( $commands, $this->_download_latest_project( ) );
+        $commands = array_merge( $commands, $this->_create_build_by_current_index( ) );
+        $commands = array_merge( $commands, $this->_deploy_current_build( ) );
+
+        foreach ( $commands as $cmd ) {
+            $tmp = shell_exec( $cmd );
+
+            $rs .= "$ $cmd\n";
+            $rs .= htmlentities(trim($tmp)) . "\n";
+        }
         
         if ( $this->_read_file( PhpDeploy::REPEAT_UPDATE_FILE ) === '1' ) {
 
@@ -131,7 +135,7 @@ class PhpDeploy extends BaseDeploy
 
         }
 
-        return ob_get_clean();
+        return $rs;
 
     }
 
@@ -148,7 +152,9 @@ class PhpDeploy extends BaseDeploy
     {
         $this->_rewrite_file( PhpDeploy::REPEAT_UPDATE_FILE, '1' );
 
-        return 'print "Server is deploying.\nAfter this, will happen repeat deploy.\n";';
+        $cmd[] = 'print "Server is deploying.\nAfter this, will happen repeat deploy.\n"';
+        
+        return $cmd;
     }
 
 
@@ -232,7 +238,9 @@ class PhpDeploy extends BaseDeploy
 
         }
 
-        return 'echo "Current deploy is locked.";';
+        $cmd[] = 'echo "Current deploy is locked."';
+
+        return $cmd;
 
     }
 
@@ -248,20 +256,22 @@ class PhpDeploy extends BaseDeploy
     private function _download_latest_project( )
     {
 
-        $cmd = 'cd ' . PhpDeploy::TMP_PATH . ';';
+        $cmd[] = 'cd ' . PhpDeploy::TMP_PATH;
 
         if ( ! is_dir(PhpDeploy::TMP_PATH . '/.git') ) {
 
-            $cmd .= 'git clone -b ' . BRANCH_NAME . ' ' . REPO_LINK . ' . ;';
+            $cmd[] = 'git clone -b ' . BRANCH_NAME . ' ' . REPO_LINK . ' .';
 
 
         } else {
 
-            $cmd .= 'git pull origin ' . BRANCH_NAME . ';';
+            $cmd[] = 'git pull origin ' . BRANCH_NAME;
 
         }
 
-        $cmd .= 'git status;';
+        $cmd[] = 'git status';
+        
+        $cmd[] = 'cd ..';
 
         return $cmd;
 
@@ -285,17 +295,21 @@ class PhpDeploy extends BaseDeploy
         // Save next build index
         $this->_rewrite_file( PhpDeploy::BUILD_INDEX_FILE, $this->_build_index + 1 );
 
-        $cmd = 'cp -Rf ' . PhpDeploy::TMP_PATH . '/. ' . $this->_build_folder . ';';
+        $cmd[] = 'cp -Rf ' . PhpDeploy::TMP_PATH . '/. ' . $this->_build_folder;
+
+        $cmd[] = 'cd ' . $this->_build_folder;
 
         // Remove unnecessary folders
         foreach ( CLEAN_FOLDERS as $folder_name ) {
-            $cmd .= "find -type d -find $folder_name -delete;";
+            $cmd[] = "find -type d -find $folder_name -delete";
         }
 
         // Remove unnecessary files
         foreach ( CLEAN_FILES as $file_name ) {
-            $cmd .= "find -type f -find $file_name -delete;";
+            $cmd[] = "find -type f -find $file_name -delete";
         }
+
+        $cmd[] = 'cd ../..';
 
         return $cmd;
 
@@ -313,7 +327,7 @@ class PhpDeploy extends BaseDeploy
     private function _deploy_current_build( )
     {
 
-        $cmd = 'cp -Ru ' . $this->_build_folder . '/. ' . PhpDeploy::DOC_ROOT_PATH . ';';
+        $cmd[] = 'cp -Ru ' . $this->_build_folder . '/. ' . PhpDeploy::DOC_ROOT_PATH;
 
         return $cmd;
 

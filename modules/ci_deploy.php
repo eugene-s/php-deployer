@@ -53,6 +53,8 @@ final class CI_Deploy extends PhpDeploy
     public function __construct( )
     {
 
+        parent::__construct();
+        
         $this->_load();
 
     }

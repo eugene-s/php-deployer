@@ -294,7 +294,7 @@ class PhpDeploy extends BaseDeploy
 
         // Remove unnecessary folders
         foreach ( CLEAN_FOLDERS as $folder_name ) {
-            $cmd[] = "find {$this->_build_folder} -type d -find $folder_name -exec rm -rf {} +";
+            $cmd[] = "find {$this->_build_folder} -type d -name $folder_name -exec rm -rf {} +";
         }
 
         // Remove unnecessary files

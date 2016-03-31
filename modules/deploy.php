@@ -98,9 +98,6 @@ class PhpDeploy extends BaseDeploy
         $this->_build_index = (int) $this->_read_file( PhpDeploy::BUILD_INDEX_FILE );
         $this->_build_folder = PhpDeploy::BUILDS_PATH . '/' . $this->_build_index;
 
-        // Save next build index
-        $this->_rewrite_file( PhpDeploy::BUILD_INDEX_FILE, $this->_build_index + 1 );
-
     }
 
 
@@ -111,6 +108,10 @@ class PhpDeploy extends BaseDeploy
      */
     public function do_deploy( )
     {
+
+        // Save next build index
+        $this->_rewrite_file( PhpDeploy::BUILD_INDEX_FILE, $this->_build_index + 1 );
+
         $rs = '';
 
         $this->_lock( true );

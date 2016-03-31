@@ -6,7 +6,7 @@ if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
     exit();
 }
 
-define('BASEPATH', '2click.remotehost.tk');
+define('BASEPATH', 'http://2click.remotehost.tk:1957/');
 
 /**
  * Php-Deployer
@@ -55,18 +55,38 @@ function ExecuteDeploy( )
 {
 
     $deploy = new CI_Deploy( );
+    $git_hook = new GitHubHook( );
 
-    echo '<pre>';
-    if ( ! $deploy->is_locked( ) ) {
-    
-        echo $deploy->do_deploy( );
-    
-    } else {
-        
-        echo $deploy->do_repeat_deploy( );
-        
+    try {
+
+        // If branch not compared
+        if ( ! $git_hook->is_branch( BRANCH_NAME ) ) {
+            throw new Exception( 'Will be deployed, if branch is ' . BRANCH_NAME, 406 );
+        }
+
+        // If now there is deploying
+        if ( $deploy->is_locked( ) ) {
+            throw new Exception( $deploy->do_repeat_deploy( ), 202 );
+        }
+
+        // Do deploy
+        $message = $deploy->do_deploy( );
+
+    } catch ( Exception $exception ) {
+
+        $message = $exception->getMessage( );
+
+        http_response_code( $exception->getCode( ) );
+
+    } finally {
+
+        echo '<pre>';
+
+        echo $message;
+
+        echo '</pre>';
+
     }
-    echo '</pre>';
 
 }
 

@@ -1,4 +1,4 @@
-<?php if ( ! defined( 'BASEPATH' ) ) exit( 'No direct script access allowed' );
+<?php defined( 'BASEPATH' ) OR exit( 'No direct script access allowed' );
 
 /**
  * Class CI_Deploy
@@ -11,22 +11,6 @@
  */
 final class CI_Deploy extends PhpDeploy
 {
-
-    /**
-     * Migrations pat in CodeIgniter
-     *
-     * @const
-     */
-    const MIGRATIONS_PATH = PhpDeploy::DOC_ROOT_PATH . '/application/migrations';
-
-
-    /**
-     * Current migration index file
-     *
-     * @const
-     */
-    const MIGRATION_INDEX_FILE = 'var/migration_index';
-
 
     /**
      * Configs path, which will be copied to CI
@@ -54,8 +38,6 @@ final class CI_Deploy extends PhpDeploy
     {
 
         parent::__construct();
-        
-        $this->_load();
 
     }
 
@@ -90,22 +72,6 @@ final class CI_Deploy extends PhpDeploy
 
 
     /**
-     * Load files and folders.
-     * Create its, if not found.
-     *
-     * @method _load
-     * @access private
-     */
-    private function _load( )
-    {
-
-        // Check migration index file exists
-        $this->_create_file_if_not_exists( CI_Deploy::MIGRATION_INDEX_FILE );
-
-    }
-
-
-    /**
      * Copy production configs to CodeIgniter
      *
      * @method _copy_ci_configs
@@ -135,7 +101,7 @@ final class CI_Deploy extends PhpDeploy
      */
     private function _run_migration_and_update_index( )
     {
-        $cmd[] = 'echo NaN';
+        $cmd[] = '/usr/bin/php ' . PhpDeploy::DOC_ROOT_PATH . '/index.php migrate current';
 
         return $cmd;
     }

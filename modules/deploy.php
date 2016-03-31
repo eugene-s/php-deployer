@@ -1,4 +1,4 @@
-<?php if ( ! defined( 'BASEPATH' ) ) exit( 'No direct script access allowed' );
+<?php defined( 'BASEPATH' ) OR exit( 'No direct script access allowed' );
 
 /**
  * Class PhpDeploy
@@ -316,7 +316,9 @@ class PhpDeploy extends BaseDeploy
     private function _deploy_current_build( )
     {
 
-        $cmd[] = 'cp -Ru ' . $this->_build_folder . '/. ' . PhpDeploy::DOC_ROOT_PATH;
+        $cmd[] = 'rm ' . PhpDeploy::DOC_ROOT_PATH;
+
+        $cmd[] = 'ln -s ' . $this->_build_folder . ' ' . PhpDeploy::DOC_ROOT_PATH;
 
         $cmd[] = 'find ' . PhpDeploy::DOC_ROOT_PATH . ' -type f | xargs chmod -v 644';
         $cmd[] = 'find ' . PhpDeploy::DOC_ROOT_PATH . ' -type d | xargs chmod -v 755';

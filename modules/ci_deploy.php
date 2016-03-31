@@ -101,7 +101,7 @@ final class CI_Deploy extends PhpDeploy
      */
     private function _run_migration_and_update_index( )
     {
-        $cmd[] = 'CI_ENV="production" /usr/bin/php ' . PhpDeploy::DOC_ROOT_PATH . '/index.php migrate current';
+        $cmd[] = 'CI_ENV="production" /usr/bin/php ' . PhpDeploy::DOC_ROOT_PATH . '/index.php migrate';
 
         return $cmd;
     }

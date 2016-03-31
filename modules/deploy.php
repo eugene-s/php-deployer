@@ -321,7 +321,7 @@ class PhpDeploy extends BaseDeploy
 
         $cmd[] = 'rm ' . PhpDeploy::DOC_ROOT_PATH;
 
-        $cmd[] = 'ln -s ' . $this->_build_folder . ' ' . PhpDeploy::DOC_ROOT_PATH;
+        $cmd[] = 'ln -s ' . $this->_build_folder . '/ ' . PhpDeploy::DOC_ROOT_PATH;
 
         return $cmd;
 

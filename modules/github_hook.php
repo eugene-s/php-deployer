@@ -26,6 +26,8 @@ class GitHubHook
      * 
      * @method __construct
      * @access public
+     *
+     * @throws Exception
      */
     public function __construct( )
     {
@@ -36,8 +38,12 @@ class GitHubHook
         // Decode JSON data
         $this->_post = json_decode( $post_raw_data );
 
+        if ( ! isset( $this->_post->ref ) ) {
+            throw new Exception( '', 400 );
+        }
+
         // Get pushed branch
-        $this->_pushed_branch = preg_replace( '/[^//]*$/', '', $this->_post->ref );
+        $this->_pushed_branch = preg_replace( '/(.*)\//', '', $this->_post->ref );
 
     }
 

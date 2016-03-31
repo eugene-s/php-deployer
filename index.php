@@ -6,7 +6,7 @@ if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
     exit();
 }
 
-define('BASEPATH', 'http://2click.remotehost.tk:1957/');
+define( 'BASEPATH', 'http://2click.remotehost.tk:1957/' );
 
 /**
  * Php-Deployer
@@ -54,10 +54,10 @@ require_once 'modules/github_hook.php';
 function ExecuteDeploy( ) 
 {
 
-    $deploy = new CI_Deploy( );
-    $git_hook = new GitHubHook( );
-
     try {
+
+        $deploy = new CI_Deploy( );
+        $git_hook = new GitHubHook( );
 
         // If branch not compared
         if ( ! $git_hook->is_branch( BRANCH_NAME ) ) {
@@ -80,11 +80,7 @@ function ExecuteDeploy( )
 
     } finally {
 
-        echo '<pre>';
-
         echo $message;
-
-        echo '</pre>';
 
     }
 

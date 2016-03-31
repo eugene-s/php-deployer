@@ -61,7 +61,7 @@ function ExecuteDeploy( )
 
         // If branch not compared
         if ( ! $git_hook->is_branch( BRANCH_NAME ) ) {
-            throw new Exception( 'Will be deployed, if branch is ' . BRANCH_NAME, 406 );
+            throw new Exception( 'Deploying only if pushed branch ' . BRANCH_NAME, 406 );
         }
 
         // If now there is deploying

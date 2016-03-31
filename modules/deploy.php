@@ -204,9 +204,6 @@ class PhpDeploy extends BaseDeploy
         // Check tmp path folder
         $this->_create_directory_if_not_exists( PhpDeploy::TMP_PATH );
 
-        // Check project path folder
-        $this->_create_directory_if_not_exists( PhpDeploy::DOC_ROOT_PATH );
-
         // Check file build index exists
         $this->_create_file_if_not_exists( PhpDeploy::BUILD_INDEX_FILE );
 
@@ -320,6 +317,7 @@ class PhpDeploy extends BaseDeploy
     {
 
         $cmd[] = 'rm ' . PhpDeploy::DOC_ROOT_PATH;
+        $cmd[] = 'rm -rf ' . PhpDeploy::DOC_ROOT_PATH;
 
         $cmd[] = 'ln -s ' . $this->_build_folder . '/ ' . PhpDeploy::DOC_ROOT_PATH;
 

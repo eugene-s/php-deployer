@@ -288,6 +288,9 @@ class PhpDeploy extends BaseDeploy
 
         $cmd[] = 'cp -Rf ' . PhpDeploy::TMP_PATH . '/. ' . $this->_build_folder;
 
+        $cmd[] = "find {$this->_build_folder} -type f | xargs chmod -v 644";
+        $cmd[] = "find {$this->_build_folder} -type d | xargs chmod -v 755";
+
         // Remove unnecessary folders
         foreach ( CLEAN_FOLDERS as $folder_name ) {
             $cmd[] = "find {$this->_build_folder} -type d -name $folder_name -exec rm -rf {} +";

@@ -150,14 +150,18 @@ final class CI_Deploy extends PhpDeploy
         $mysqldump_credentials = '-user ' . DB_USER . ' -password ' . DB_PASSWORD;
 
         // Other parameters for 'mysqldump'
-        $mysqldump_parameters = '--add-drop-database --add-drop-table --add-drop-trigger --create-options --triggers';
+        $mysqldump_parameters =
+            '--add-drop-database --add-drop-table --add-drop-trigger --create-options --triggers --single-transaction';
 
         // Create dump of database to file
         $cmd[] =
             'mysqldump ' . $mysqldump_credentials . ' ' . $mysqldump_parameters . ' ' . DB_NAME . ' > ' . $mysqldump_full_file_path;
 
         // Archive new dump of database
-        $cmd[] = $this->_archive( $mysqldump_full_file_path, $mysqldump_file_name, $archive_path_with_pwd );
+        $cmd = array_merge(
+            $cmd,
+            $this->_archive( $mysqldump_full_file_path, $mysqldump_file_name, $archive_path_with_pwd )
+        );
 
         // Remove dump file
         $cmd[] = 'rm ' . $mysqldump_full_file_path;

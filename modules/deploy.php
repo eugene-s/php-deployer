@@ -372,7 +372,7 @@ class PhpDeploy extends BaseDeploy
     {
 
         $cmd[] = 'rm ' . self::DOC_ROOT_PATH . '/' . self::UPLOAD_FILES_PATH;
-        $cmd[] = 'rm -rf' . self::DOC_ROOT_PATH . '/' . self::UPLOAD_FILES_PATH;
+        $cmd[] = 'rm -rf ' . self::DOC_ROOT_PATH . '/' . self::UPLOAD_FILES_PATH;
 
         // Remove old 'DOC_ROOT_PATH' link
         $cmd[] = 'rm ' . self::DOC_ROOT_PATH;

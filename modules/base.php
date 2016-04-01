@@ -1,32 +1,7 @@
 <?php defined( 'BASEPATH' ) OR exit( 'No direct script access allowed' );
 
 class BaseDeploy
-{
-
-    /**
-     * Archive files/directories and move to specified directory
-     *
-     * @method _archive
-     * @access protected
-     * 
-     * @param string $_for_archive_
-     * @param string $_archive_name_
-     * @param string $_store_name_
-     *
-     * @return array of commands
-     */
-    protected function _archive( $_for_archive_, $_archive_name_, $_store_name_ )
-    {
-
-        $for_archive = getcwd( ) . '/' . $_for_archive_;
-        $store_name = getcwd( ) . '/' . $_store_name_;
-
-        $cmd[] = '( cd ' . $for_archive . '; tar cvpzf ' . $_archive_name_ . '.tar.gz ' . $store_name . ' )';
-
-        return $cmd;
-
-    }
-    
+{    
     
     /**
      * Check directory, if not exists, then create it

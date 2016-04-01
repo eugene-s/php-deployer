@@ -141,7 +141,7 @@ final class CI_Deploy extends PhpDeploy
         $mysqldump_file_name = DB_NAME . '_' . date( 'dmY_Hms' );
 
         // Get path to new dump file
-        $mysqldump_file_path = self::ARCHIVE_DB_DUMPS_PATH . '/' . $mysqldump_file_name . '.sql';
+        $mysqldump_file_path = self::ARCHIVE_DB_DUMPS_PATH . '/' . $mysqldump_file_name . '.sql.tar.gz';
 
         // Set up credentials to MySQL
         $mysqldump_credentials = '-user ' . DB_USER . ' -password ' . DB_PASSWORD;
@@ -152,16 +152,8 @@ final class CI_Deploy extends PhpDeploy
 
         // Create dump of database to file
         $cmd[] =
-            'mysqldump ' . $mysqldump_credentials . ' ' . $mysqldump_parameters . ' ' . DB_NAME . ' > ' . getcwd( ) . '/' . $mysqldump_file_path;
-
-        // Archive new dump of database
-        $cmd = array_merge(
-            $cmd,
-            $this->_archive( $mysqldump_file_path, $mysqldump_file_name, self::ARCHIVE_DB_DUMPS_PATH )
-        );
-
-        // Remove dump file
-        $cmd[] = 'rm ' . $mysqldump_file_path;
+            'mysqldump ' . $mysqldump_credentials . ' ' . $mysqldump_parameters . ' ' . DB_NAME . 
+            ' | gzip > ' . getcwd( ) . '/' . $mysqldump_file_path;
 
         return $cmd;
         

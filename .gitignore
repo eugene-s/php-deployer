@@ -1,7 +1,10 @@
 # Created by .ignore support plugin (hsz.mobi)
 /.idea
+
 /builds
 /var
 /www
 /current
 /configs
+
+/config.php

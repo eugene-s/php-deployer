@@ -404,7 +404,7 @@ class PhpDeploy extends BaseDeploy
                 
                 // Archive the build and move to 'ARCHIVE_BUILDS_PATH'
                 $cmd[] =
-                    '(cd ' . $full_build_path . '; tar cpzf ' . self::ARCHIVE_BUILDS_PATH . '/' . $item . '.tar.gz . --exclude files)';
+                    '(cd ' . $full_build_path . '; tar cpzf ' . self::ARCHIVE_BUILDS_PATH . '/' . $item . '.gz . --exclude files)';
                 
                 // Remove this build
                 $cmd[] = 'rm -rf ' . $full_build_path;

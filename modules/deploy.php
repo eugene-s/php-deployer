@@ -371,8 +371,8 @@ class PhpDeploy extends BaseDeploy
     private function _deploy_current_build( )
     {
 
-        $cmd[] = 'rm ' . getcwd( ) . self::DOC_ROOT_PATH . '/' . self::UPLOAD_FILES_PATH;
-        $cmd[] = 'rm -rf ' . getcwd( ) . self::DOC_ROOT_PATH . '/' . self::UPLOAD_FILES_PATH;
+        $cmd[] = 'rm ' . getcwd( ) . '/' . self::DOC_ROOT_PATH . '/' . self::UPLOAD_FILES_PATH;
+        $cmd[] = 'rm -rf ' . getcwd( ) . '/' . self::DOC_ROOT_PATH . '/' . self::UPLOAD_FILES_PATH;
 
         // Remove old 'DOC_ROOT_PATH' link
         $cmd[] = 'rm ' . self::DOC_ROOT_PATH;

@@ -138,7 +138,7 @@ final class CI_Deploy extends PhpDeploy
     {
 
         // Get full path to archive of dumps
-        $archive_path_with_pwd = getcwd( ) . self::ARCHIVE_DB_DUMPS_PATH;
+        $archive_path_with_pwd = getcwd( ) . '/' . self::ARCHIVE_DB_DUMPS_PATH;
 
         // Create name for new dump file
         $mysqldump_file_name = DB_NAME . '_' . date( 'dmY_Hms' );

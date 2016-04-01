@@ -396,7 +396,7 @@ class PhpDeploy extends BaseDeploy
 
             if ( (int) preg_replace( '/\D/', '', $item ) <= $older_than_index ) {
                 // Get build path
-                $build_path = self::BUILDS_PATH . $item;
+                $build_path = self::BUILDS_PATH . '/' . $item;
                 
                 // Archive the build and move to 'ARCHIVE_BUILDS_PATH'
                 $cmd[] = $this->_archive( $build_path . '/.', $item, self::ARCHIVE_BUILDS_PATH );

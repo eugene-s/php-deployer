@@ -339,7 +339,7 @@ class PhpDeploy extends BaseDeploy
         // Copy new build to 'BUILDS_PATH' with new index 
         $cmd[] = 'cp -Rf ' . self::TMP_PATH . '/. ' . $this->_build_folder;
 
-        $cmd[] = 'cp -Rf ' . self::TMP_PATH . '/files ' . self::UPLOAD_FILES_PATH;
+        $cmd[] = 'cp -Rf ' . self::TMP_PATH . '/files/. ' . self::UPLOAD_FILES_PATH;
 
         // Run right chmod to files/folders
         $cmd[] = "find {$this->_build_folder} -type f | xargs chmod -v 644 > /dev/null";

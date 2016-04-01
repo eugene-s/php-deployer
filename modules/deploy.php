@@ -380,7 +380,7 @@ class PhpDeploy extends BaseDeploy
 
         // Create link on new build
         $cmd[] = 'ln -s ' . $this->_build_folder . '/ ' . self::DOC_ROOT_PATH;
-        $cmd[] = 'ln -s ' . self::UPLOAD_FILES_PATH . '/ ' . $this->_build_folder . '/' . self::UPLOAD_FILES_PATH;
+        $cmd[] = 'ln -s ' . getcwd( ) . '/' . self::UPLOAD_FILES_PATH . '/ ' . self::DOC_ROOT_PATH . '/' . self::UPLOAD_FILES_PATH;
 
         return $cmd;
 

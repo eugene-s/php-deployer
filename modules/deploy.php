@@ -396,14 +396,14 @@ class PhpDeploy extends BaseDeploy
 
             if ( ( (int) preg_replace( '/\D/', '', $item ) ) <= $older_than_index ) {
                 // Get build path
-                $build_path = self::BUILDS_PATH . '/' . $item;
+                $full_build_path = getcwd() . '/' . self::BUILDS_PATH . '/' . $item;
                 
                 // Archive the build and move to 'ARCHIVE_BUILDS_PATH'
                 $cmd[] =
-                    '(cd ' . $build_path . '; tar cpzf ' . self::ARCHIVE_BUILDS_PATH . '/' . $item . '.tar.gz . --exclude files)';
+                    '(cd ' . $full_build_path . '; tar cpzf ' . self::ARCHIVE_BUILDS_PATH . '/' . $item . '.tar.gz . --exclude files)';
                 
                 // Remove this build
-                $cmd[] = 'rm -rf ' . $build_path;
+                $cmd[] = 'rm -rf ' . $full_build_path;
             }
 
         }

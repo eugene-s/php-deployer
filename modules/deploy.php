@@ -394,6 +394,10 @@ class PhpDeploy extends BaseDeploy
         // Iterating folders
         foreach ( $scan_result as $item ) {
 
+            if ( $item === '.' or $item === '..' ) {
+                continue;
+            }
+
             if ( ( (int) preg_replace( '/\D/', '', $item ) ) <= $older_than_index ) {
                 // Get build path
                 $full_build_path = getcwd() . '/' . self::BUILDS_PATH . '/' . $item;

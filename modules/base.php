@@ -18,8 +18,8 @@ class BaseDeploy
     protected function _archive( $_for_archive_, $_archive_name_, $_store_name_ )
     {
 
-        $for_archive = getcwd( ) . $_for_archive_;
-        $store_name = getcwd( ) . $_store_name_;
+        $for_archive = getcwd( ) . '/' . $_for_archive_;
+        $store_name = getcwd( ) . '/' . $_store_name_;
 
         $cmd[] = '( cd ' . $for_archive . '; tar cvpzf ' . $_archive_name_ . '.tar.gz ' . $store_name . ' )';
 

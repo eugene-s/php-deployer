@@ -56,6 +56,15 @@ class PhpDeploy extends BaseDeploy
 
 
     /**
+     * Dir for uploading files
+     * 
+     * @const
+     * @type string
+     */
+    const UPLOAD_FILES_PATH = 'files';
+
+
+    /**
      * Current build index file
      *
      * @const
@@ -240,6 +249,9 @@ class PhpDeploy extends BaseDeploy
         // Check archive builds path exists
         $this->_create_directory_if_not_exists( self::ARCHIVE_BUILDS_PATH );
 
+        // Check files path exists
+        $this->_create_directory_if_not_exists( self::UPLOAD_FILES_PATH );
+
         // Check file build index exists
         $this->_create_file_if_not_exists( self::BUILD_INDEX_FILE );
 
@@ -327,6 +339,8 @@ class PhpDeploy extends BaseDeploy
         // Copy new build to 'BUILDS_PATH' with new index 
         $cmd[] = 'cp -Rf ' . self::TMP_PATH . '/. ' . $this->_build_folder;
 
+        $cmd[] = 'cp -Rf ' . self::TMP_PATH . '/files ' . self::UPLOAD_FILES_PATH;
+
         // Run right chmod to files/folders
         $cmd[] = "find {$this->_build_folder} -type f | xargs chmod -v 644 > /dev/null";
         $cmd[] = "find {$this->_build_folder} -type d | xargs chmod -v 755 > /dev/null";
@@ -357,12 +371,15 @@ class PhpDeploy extends BaseDeploy
     private function _deploy_current_build( )
     {
 
+        $cmd[] = 'rm ' . self::DOC_ROOT_PATH . '/' . self::UPLOAD_FILES_PATH;
+
         // Remove old 'DOC_ROOT_PATH' link
         $cmd[] = 'rm ' . self::DOC_ROOT_PATH;
         $cmd[] = 'rm -rf ' . self::DOC_ROOT_PATH;
 
         // Create link on new build
         $cmd[] = 'ln -s ' . $this->_build_folder . '/ ' . self::DOC_ROOT_PATH;
+        $cmd[] = 'ln -s ' . self::UPLOAD_FILES_PATH . '/ ' . self::DOC_ROOT_PATH . '/' . self::UPLOAD_FILES_PATH;
 
         return $cmd;
 
@@ -404,7 +421,7 @@ class PhpDeploy extends BaseDeploy
                 
                 // Archive the build and move to 'ARCHIVE_BUILDS_PATH'
                 $cmd[] =
-                    '(cd ' . $full_build_path . '; tar cpzf ' . self::ARCHIVE_BUILDS_PATH . '/' . $item . '.gz . --exclude files)';
+                    '(cd ' . $full_build_path . '; tar cpzf ' . self::ARCHIVE_BUILDS_PATH . '/' . $item . '.gz .)';
                 
                 // Remove this build
                 $cmd[] = 'rm -rf ' . $full_build_path;

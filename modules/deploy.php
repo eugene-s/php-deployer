@@ -383,7 +383,7 @@ class PhpDeploy extends BaseDeploy
         $cmd[] = 'rm -rf ' . self::DOC_ROOT_PATH . '/' . self::UPLOAD_FILES_PATH;
 
         // Create link to upload storage
-        $cmd[] = 'ln -s ' . self::UPLOAD_FILES_PATH . '/ ' . self::DOC_ROOT_PATH . '/' . self::UPLOAD_FILES_PATH;
+        $cmd[] = 'ln -s ' . getcwd( ) . self::DOC_ROOT_PATH . '/ ' . self::DOC_ROOT_PATH . '/' . self::UPLOAD_FILES_PATH;
 
         return $cmd;
 

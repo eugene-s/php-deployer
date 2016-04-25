@@ -6,7 +6,7 @@ if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
     exit();
 }
 
-define( 'BASEPATH', 'http://2click.remotehost.tk:1957/' );
+define( 'BASEPATH', 'BASEPATH' );
 
 /**
  * Php-Deployer

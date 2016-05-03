@@ -58,18 +58,20 @@ final class CI_Deploy extends PhpDeploy
      * @method do_deploy
      * @access public
      *
+     * @param array $_commands_: Commands array
+     *
      * @return string
      */
-    public function do_deploy( )
+    public function do_deploy( array $_commands_ = [] )
     {
-        
-        $commands = [ ];
 
-        $commands = array_merge( $commands, $this->_copy_ci_configs() );
-        $commands = array_merge( $commands, $this->_run_migration_and_update_index() );
-        $commands = array_merge( $commands, $this->_create_and_archive_database_dump( ) );
+        $_commands_ = [ ];
 
-        return parent::do_deploy( $commands );
+        $_commands_ = array_merge( $_commands_, $this->_copy_ci_configs() );
+        $_commands_ = array_merge( $_commands_, $this->_run_migration_and_update_index() );
+        $_commands_ = array_merge( $_commands_, $this->_create_and_archive_database_dump( ) );
+
+        return parent::do_deploy( $_commands_ );
 
     }
 

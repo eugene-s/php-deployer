@@ -142,7 +142,7 @@ class PhpDeploy extends BaseDeploy
      *
      * @return string
      */
-    public function do_deploy( array $_commands_ = null )
+    public function do_deploy( array $_commands_ = [] )
     {
 
         // Save next build index
